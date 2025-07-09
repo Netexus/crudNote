@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "name": "Luis Martínez",
+      "email": "lufemarc@gmail.com",
+      "username": "luis.martinez45",
+      "password": "admin123",
+      "id": 1
+    },
+    {
+      "name": "Laptop",
+      "email": "eee@example.com",
+      "username": "luis.martinez452",
+      "password": "asdf",
+      "id": 2
+    },
+    {
+      "name": "asdf",
+      "email": "lufemarc@gmail.com",
+      "username": "luis.martinez452",
+      "password": "asdfg",
+      "id": 3
+    },
+    {
+      "name": "a",
+      "email": "lufemarc@gmail.com",
+      "username": "luis.martinez452",
+      "password": "asdfq",
+      "id": 4
+    },
+    {
+      "name": "Pepe Pérez",
+      "email": "pepe@gmail.com",
+      "username": "pepe.perez12",
+      "password": "asdf",
+      "id": 5
+    }
+  ]
+}
