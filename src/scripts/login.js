@@ -1,4 +1,4 @@
-import { goTo } from "./routes";
+import { router } from "./routes.js";
 
 const API_URL = "http://localhost:3000";
 
@@ -38,9 +38,10 @@ form.addEventListener("submit", async (e) => {
     localStorage.setItem("loggedUser", JSON.stringify(user));
 
     alert(`Welcome, ${user.name}!`);
-    window.location.origin
-    goTo("dashboard")
-
+    
+    // Redirigir a dashboard usando el enrutador
+    window.location.hash = "dashboard";
+    router();
 
   } catch (error) {
     console.error("Login error:", error);
