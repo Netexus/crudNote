@@ -1,3 +1,4 @@
+console.log("login.js works!");
 import { router } from "./routes.js";
 
 const API_URL = "http://localhost:3000";

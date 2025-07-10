@@ -25,8 +25,8 @@
 // Definición de rutas y sus componentes correspondientes
 const routes = {
   '': { component: './src/components/Home/Home.html', title: 'CrudNote - Home' },
-  'login': { component: './src/components/login/Login.html', title: 'CrudNote - Login' },
-  'register': { component: './src/components/register/Register.html', title: 'CrudNote - Register' },
+  'login': { component: './src/components/login/Login.html', script: './src/scripts/login.js', title: 'CrudNote - Login' },
+  'register': { component: './src/components/register/Register.html', script: './src/scripts/register.js', title: 'CrudNote - Register' },
   'contact': { component: './src/components/Contact/Contact.html', title: 'CrudNote - Contact' },
   'terms': { component: './src/components/Terms/Terms.html', title: 'CrudNote - Terms' },
   'about': { component: './src/components/About/About.html', title: 'CrudNote - About' },
@@ -39,31 +39,48 @@ const routes = {
 export async function loadComponent(route) {
   try {
     const routeData = routes[route] || routes['404'];
-    
+
     // Actualizar el título de la página
     document.title = routeData.title;
-    
+
     // Cargar el componente
     const response = await fetch(routeData.component);
     if (!response.ok) {
       throw new Error('Failed to load component');
     }
-    
+
     const html = await response.text();
-    
+
     // Actualizar el contenido
     const appContainer = document.getElementById('app');
     if (appContainer) {
       appContainer.innerHTML = html;
-      
+
       // Ejecutar el código JavaScript del componente cargado
       const scripts = appContainer.getElementsByTagName('script');
       Array.from(scripts).forEach(script => {
         const newScript = document.createElement('script');
-        newScript.textContent = script.textContent;
-        script.type = script.type || 'text/javascript';
+        if (script.src) {
+          newScript.src = script.src;
+          newScript.async = false; // Asegurarse de que el script se ejecute en orden
+        } else {
+          newScript.textContent = script.textContent;
+        }
+        script.type = script.type || 'module'; // Asegurarse de que sea un módulo
         script.parentNode.replaceChild(newScript, script);
       });
+    }
+
+    // Cargar un archivo JS externo definido en routeData.script (si existe)
+    if (routeData.script) {
+      const existingScript = document.querySelector(`script[src="${routeData.script}"]`);
+      if (!existingScript) {
+        const externalScript = document.createElement('script');
+        externalScript.src = routeData.script;
+        externalScript.type = 'module'; // Asegurarse de que sea un módulo
+        externalScript.async = false;
+        document.body.appendChild(externalScript);
+      }
     }
   } catch (error) {
     console.error('Error loading component:', error);
@@ -76,10 +93,10 @@ export async function loadComponent(route) {
 export function router() {
   console.log('Router ejecutándose');
   console.log('Hash actual:', window.location.hash);
-  
+
   // Obtener el hash de la URL (sin el #), o '' si está vacío
   const hash = window.location.hash.slice(1) || '';
-  
+
   // Cargar el componente correspondiente
   loadComponent(hash);
 }
@@ -100,10 +117,10 @@ export function preventDefaultLinks() {
 export function initRouter() {
   // Manejar cambios en el hash
   window.addEventListener('hashchange', router);
-  
+
   // Manejar el click en enlaces
   preventDefaultLinks();
-  
+
   // Cargar el componente inicial
   router();
 }

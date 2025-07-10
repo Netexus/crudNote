@@ -1,10 +1,14 @@
+console.log("register.js works!");
 import { router } from "./routes.js";
 
 const API_URL = "http://localhost:3000";
 
-const form = document.getElementById('registerForm');
+const form = document.getElementById("registerFormlist");
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener("submit", async (e) => {
+    console.log("Form submitted");
+});
+form.addEventListener("click", async (e) => {
     e.preventDefault();
 
     const formData = new FormData(form);
