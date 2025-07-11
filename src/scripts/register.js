@@ -3,7 +3,7 @@ import { router } from "./routes.js";
 
 const API_URL = "http://localhost:3000";
 
-const form = document.getElementById("registerFormlist");
+const form = document.getElementById("registerForm");
 
 form.addEventListener("submit", async (e) => {
     console.log("Form submitted");
